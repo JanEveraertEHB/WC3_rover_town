@@ -22,6 +22,8 @@ const environment = {
 }
 environment.render();
 
+
+const roverPositions = [];
 export const rovers = {
   render: function() {
     const rovers = document.getElementsByClassName("rover");
@@ -40,6 +42,9 @@ export const rovers = {
     })
   },
   moveRoverTo: function(rover, x,  y, task, arrivedCallback) {
+
+    // create own timeout
+    // add local positioning
     const index = roverItems.findIndex((r) => r.handle == rover.handle)
     const r = roverItems[index];
     if(Math.abs(r.position.x - x) == 0 && Math.abs(r.position.y - y) == 0) {

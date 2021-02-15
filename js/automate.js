@@ -2,7 +2,6 @@
 
 import { items } from './items.js';
 import { rovers, habitat } from './index.js';
-import { roverItems } from './rovers.js';
 
 let todo = []
 
@@ -21,7 +20,7 @@ const automation = {
 
 setInterval(() => {
   automation.run();
-  rovers.render();
-  habitat.render();
-  habitat.update();
+}, 5000);
+setInterval(() => {
+  automation.displayStatus();
 }, 500);

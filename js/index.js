@@ -23,7 +23,25 @@ const environment = {
 environment.render();
 
 
-const roverPositions = [];
+
+const roverPositions = {
+  perseverance: {
+    x: 10,
+    y: 10
+  },
+  opportunity: {
+    x: 11,
+    y: 10
+  },
+  spirit: {
+    x: 12,
+    y: 10
+  },
+  curiosity: {
+    x: 13,
+    y: 10
+  }
+};
 export const rovers = {
   render: function() {
     const rovers = document.getElementsByClassName("rover");
@@ -31,7 +49,7 @@ export const rovers = {
 
     const cells = document.getElementsByClassName("cell");
     roverItems.forEach((rover) => {
-      const matchingCells = Array.from(cells).filter((a) => a.getAttribute("x") == rover.position.x && a.getAttribute("y") == rover.position.y);
+      const matchingCells = Array.from(cells).filter((a) => a.getAttribute("x") == roverPositions[rover.handle].x && a.getAttribute("y") == roverPositions[rover.handle].y);
       matchingCells.forEach((cell) => {
         const r = document.createElement("div");
         r.classList.add("rover")
@@ -42,21 +60,29 @@ export const rovers = {
     })
   },
   moveRoverTo: function(rover, x,  y, task, arrivedCallback) {
-
+    const roverTimer = setInterval(() => {
+      this.driveRover(rover, x,  y, task, arrivedCallback, roverTimer)
+    }, 500)
+  },
+  driveRover: function(rover, x,  y, task, arrivedCallback, timeEvent ) {
+    console.log("called")
     // create own timeout
     // add local positioning
     const index = roverItems.findIndex((r) => r.handle == rover.handle)
     const r = roverItems[index];
-    if(Math.abs(r.position.x - x) == 0 && Math.abs(r.position.y - y) == 0) {
+
+    if(Math.abs(roverPositions[r.handle].x - x) == 0 && Math.abs(roverPositions[r.handle].y - y) == 0) {
       arrivedCallback(r.handle, task);
+      clearInterval(timeEvent)
     }
     else {
-      if(r.position.x < x) { roverItems[index].position.x++; }
-      if(r.position.x > x) { roverItems[index].position.x--; }
-      if(r.position.y < y) { roverItems[index].position.y++; }
-      if(r.position.y > y) { roverItems[index].position.y--; }
+      if(roverPositions[r.handle].x < x) { roverPositions[r.handle].x++; }
+      if(roverPositions[r.handle].x > x) { roverPositions[r.handle].x--; }
+      if(roverPositions[r.handle].y < y) { roverPositions[r.handle].y++; }
+      if(roverPositions[r.handle].y > y) { roverPositions[r.handle].y--; }
     }
 
+    this.render();
   },
   getRoverWithState:(status) => {
     let taskedRovers =  roverItems.filter((rover) => {
@@ -78,6 +104,7 @@ export const rovers = {
     console.log(`rover ${roverHandle} set to idle`)
   }
 }
+
 rovers.render();
 
 export const habitat = {
@@ -110,3 +137,7 @@ export const habitat = {
 
 habitat.render();
 
+
+setInterval(() => {
+  habitat.update();
+}, 200);

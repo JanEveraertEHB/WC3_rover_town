@@ -9,15 +9,20 @@ let todo = []
 const automation = {
   run: function() {
     // get a list of the rovers
+    const itemsSorted =[];
     Object.keys(items).forEach((key) => {
-      if(items[key].timeUntillMaintenance < 18) {
+      itemsSorted.push(items[key]);
+    });
+    itemsSorted.sort((a, b) => a.timeUntillMaintenance - b.timeUntillMaintenance);
+    itemsSorted.forEach((habitat) => {
+      if(habitat.timeUntillMaintenance < 18) {
         // something up with this one
-        if(todo.findIndex((e) => e.task == key) ==  -1) {
+        if(todo.findIndex((e) => e.task == habitat.handle) ==  -1) {
           const r = rovers.getIdleRover();
           if(typeof r !== "undefined") {
-            rovers.setRoverState(r.handle, key)
+            rovers.setRoverState(r.handle, habitat.handle)
             todo.push({
-              task: key,
+              task: habitat.handle,
               rover: r
             })
           }
@@ -27,12 +32,10 @@ const automation = {
         }
       }
     })
-    console.log(todo)
     todo.forEach((todoTask) => {
       this.moveToTask(todoTask.rover, todoTask.task)
     })
     
-    this.displayStatus();
   },
   displayStatus: function() {
     document.getElementById("statusWrapper").innerHTML = "";
@@ -40,13 +43,13 @@ const automation = {
       const obj = items[key];
       const el = document.createElement("div");
       el.classList.add("statusBar");
-      el.innerHTML = obj.handle + " - " + obj.timeUntillMaintenance
+      el.innerHTML = obj.handle + ": " + obj.timeUntillMaintenance
       document.getElementById("statusWrapper").insertAdjacentElement("beforeEnd", el)
     })
     roverItems.forEach((obj) => {
       const el = document.createElement("div");
       el.classList.add("statusBar");
-      el.innerHTML = obj.handle + " - " + obj.state + " [" + obj.position.x + "," + obj.position.x + "]"
+      el.innerHTML = obj.handle + ": " + obj.state
       document.getElementById("statusWrapper").insertAdjacentElement("beforeEnd", el)
     })
   },
@@ -65,7 +68,7 @@ const automation = {
 
 setInterval(() => {
   automation.run();
-  rovers.render();
-  habitat.render();
-  habitat.update();
-}, 500);
+}, 5000);
+setInterval(() => {
+  automation.displayStatus()
+}, 200)

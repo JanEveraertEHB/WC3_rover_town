@@ -6,10 +6,10 @@ import { roverItems } from './rovers.js';
 const environment = {
   render: function() {
     const container = document.getElementById("container");
-    for(let i = 0; i < 20; i++) {
+    for(let j = 0; j < 20; j++) {
       const row = document.createElement("div");
-      row.id = `row-${i}`;
-      for(let j = 0; j < 20; j++) {
+      row.id = `row-${j}`;
+      for(let i = 0; i < 20; i++) {
         const cell = document.createElement("div");
         cell.classList.add("cell");
         cell.setAttribute("x", i);
@@ -27,19 +27,19 @@ environment.render();
 const roverPositions = {
   perseverance: {
     x: 10,
-    y: 10
+    y: 9
   },
   opportunity: {
     x: 11,
-    y: 10
+    y: 9
   },
   spirit: {
     x: 12,
-    y: 10
+    y: 9
   },
   curiosity: {
     x: 13,
-    y: 10
+    y: 9
   }
 };
 export const rovers = {
@@ -91,17 +91,25 @@ export const rovers = {
     const sel = Math.floor(Math.random() * taskedRovers.length);
     return taskedRovers[sel]
   },
-  getIdleRover:() => {
-    let idleRovers =  roverItems.filter((rover) => {
-      return rover.state == "idle"
-    })
-    const sel = Math.floor(Math.random() * idleRovers.length);
-    return idleRovers[sel]
+  getIdleRover:(callback) => {
+    setTimeout(() => {
+      let idleRovers =  roverItems.filter((rover) => {
+        return rover.state == "idle"
+      })
+      const sel = Math.floor(Math.random() * idleRovers.length);
+  
+      // news travels slow on mars
+      callback(idleRovers[sel]);
+    }, 500)
   },
   setRoverState: function(roverHandle, state) {
     const index = roverItems.findIndex((e) => e.handle == roverHandle)
     roverItems[index].state = state
     console.log(`rover ${roverHandle} set to idle`)
+  },
+  performTask: function(roverHandle, task) {
+    items[task].timeUntillMaintenance = 20;
+    rovers.setRoverState(roverHandle, "idle")
   }
 }
 
@@ -123,10 +131,6 @@ export const habitat = {
         cell.appendChild(genItem)
       })
     })
-  },
-  performTask: function(roverHandle, task) {
-    items[task].timeUntillMaintenance = 20;
-    rovers.setRoverState(roverHandle, "idle")
   },
   update: function() {
     Object.keys(items).forEach((key) => {

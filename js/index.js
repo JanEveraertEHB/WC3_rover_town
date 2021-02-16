@@ -3,6 +3,8 @@
 import { items } from './items.js';
 import { roverItems } from './rovers.js';
 
+
+const colors = [ "#fb9b84", "#ab2e3d", "#b34a3b"]
 const environment = {
   render: function() {
     const container = document.getElementById("container");
@@ -13,6 +15,7 @@ const environment = {
         const cell = document.createElement("div");
         cell.classList.add("cell");
         cell.setAttribute("x", i);
+        cell.style = `background-color: ${colors[Math.floor(Math.random() * colors.length)]}`
         cell.setAttribute("y", j);
         row.appendChild(cell)
       }
@@ -105,10 +108,10 @@ export const rovers = {
   setRoverState: function(roverHandle, state) {
     const index = roverItems.findIndex((e) => e.handle == roverHandle)
     roverItems[index].state = state
-    console.log(`rover ${roverHandle} set to idle`)
+    console.log(`rover ${roverHandle} set to ${state}`)
   },
   performTask: function(roverHandle, task) {
-    items[task].timeUntillMaintenance = 20;
+    items[task].timeUntillMaintenance = 100;
     rovers.setRoverState(roverHandle, "idle")
   }
 }

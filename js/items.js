@@ -7,7 +7,7 @@ export const items = {
       "x": 2,
       "y": 2
     },
-    "timeUntillMaintenance": 20
+    "timeUntillMaintenance": 100
   },
   "oxygen": {
     "handle": "oxygen",
@@ -15,7 +15,7 @@ export const items = {
       "x": 12,
       "y": 10
     },
-    "timeUntillMaintenance": 20
+    "timeUntillMaintenance": 100
   },
   
   "battery": {  
@@ -24,7 +24,7 @@ export const items = {
       "x": 15,
       "y": 18
     },
-    "timeUntillMaintenance": 20
+    "timeUntillMaintenance": 100
   },
   "solar": {
     "handle": "solar",
@@ -32,7 +32,7 @@ export const items = {
       "x": 16,
       "y": 12
     },
-    "timeUntillMaintenance": 20
+    "timeUntillMaintenance": 100
   },
   "labo": {
     "handle": "labo",
@@ -40,6 +40,6 @@ export const items = {
       "x": 18,
       "y": 12
     },
-    "timeUntillMaintenance": 20
+    "timeUntillMaintenance": 100
   }
 }

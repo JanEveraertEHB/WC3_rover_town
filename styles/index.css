@@ -1,6 +1,7 @@
 body {
   font-family: sans-serif;
   padding: 20px;
+  background-color: #10071a
 }
 
 * {
@@ -11,17 +12,23 @@ body {
 main {
   width: 500px;
   height: 500px;
+  margin: auto;
+  margin-top: 50px
 }
-.container {
+#container {
   width: 500px;
   height: 500px;
   box-sizing: border-box;
+  background-color: #651f31;
+  
 }
 #statusWrapper {
   width: 100%;
   float: left;
   height: 200px;
-  background-color: #aaa;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: #ccd7d5;
 }
 .row {
   width: 100%;
@@ -33,10 +40,10 @@ main {
   height: 23px;
   margin: 1px;
   float: left;
-  background-color: red;
   position: relative;
   left: 0;
   top: 0;
+  opacity: 0.80;
 }
 .item {
   width: 13px;
@@ -47,31 +54,34 @@ main {
   left: 0;
   top: 0;
   z-index: 10;
+  opacity: 1;
 }
+
 .rover {
-  width: 8px;
-  height: 8px;
-  background-color: #f90;
-  border: 1px solid #f90;
+  width: 9px;
+  height: 9px;
+  background-color: #fff;
+  border: 2px solid #360e39;
   box-sizing: border-box;
-  margin: 8px;
+  margin: 7px;
   position: absolute;
   left: 0;
   top: 0;
+  opacity: 1;
   z-index: 12;
 }
 .plants {
-  background-color: green;
+  background-color: #bfed91;
 }
 .oxygen {
-  background-color: blue;
+  background-color: #4061ab;
 }
 .solar {
-  background-color: #0d0d0d;
+  background-color: #241d29;
 }
 .battery {
-  background-color: purple;
+  background-color: #e97733;
 }
 .labo {
-  background-color: #fff;
+  background-color: #f6d154;
 }
